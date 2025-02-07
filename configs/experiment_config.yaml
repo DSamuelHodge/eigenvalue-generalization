@@ -1,0 +1,55 @@
+# Experiment Configuration
+
+model:
+  name: bert-base-uncased
+  num_labels: 2
+  task: sequence-classification
+
+data:
+  train_batch_size: 32
+  eval_batch_size: 64
+  max_length: 128
+
+training:
+  learning_rate: 2e-5
+  weight_decay: 0.01
+  num_epochs: 3
+  warmup_steps: 500
+  gradient_accumulation_steps: 1
+
+eigenvalue_analysis:
+  # How often to compute eigenvalue metrics
+  analysis_frequency: 100  # steps
+  
+  # Target ratios for controlled experiments
+  target_ratios: [1.0, 1.5, 2.0, 2.5, 3.0]
+  
+  # Strength of eigenvalue modifications
+  modification_strength: 0.1
+  
+  # Which layers to analyze
+  analyze_layers: ['attention', 'intermediate', 'output']
+  
+  # Statistical significance level
+  alpha: 0.05
+  
+  # Metrics to track
+  metrics:
+    - eigenvalue_ratio
+    - stable_rank
+    - loss
+    - accuracy
+    - generalization_gap
+
+plots:
+  # Types of plots to generate
+  types:
+    - eigenvalue_distribution
+    - ratio_vs_generalization
+    - layer_heatmap
+    
+  # Plot format settings  
+  format:
+    figsize: [10, 6]
+    dpi: 300
+    style: seaborn
